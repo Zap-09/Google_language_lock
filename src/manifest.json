@@ -2,6 +2,11 @@
     "manifest_version": 3,
     "name": "Google Language Lock",
     "version": "1.0",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{949c7aab-8f6c-4028-8773-09a38eaaec3a}"
+        }
+    },
     "icons": {
         "16": "icons/16.png",
         "32": "icons/32.png",
