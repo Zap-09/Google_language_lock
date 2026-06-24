@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Google Language Lock</title>
+</head>
+
+<body>
+
+    <h1>Config</h1>
+
+    <div id="unsaved-warning">
+        You have unsaved settings
+    </div>
+
+    <main class="popup">
+
+        <div class="setting-row">
+            <label for="enable">
+                Enable Extension
+            </label>
+            <input type="checkbox" id="enable">
+        </div>
+
+        <div class="setting-row">
+            <label for="modify-search">
+                <abbr title="Append hl=xx to Google searches">
+                    Modify Search URL
+                </abbr>
+            </label>
+            <input type="checkbox" id="modify-search">
+        </div>
+
+        <div class="setting-row">
+            <label for="search-language">
+                Search Language
+            </label>
+
+            <select id="search-language">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="custom">Custom...</option>
+            </select>
+        </div>
+
+        <div id="search-custom-container" class="custom-input-container">
+            <input type="text" id="search-language-custom" placeholder="e.g. en, fr, de, ja">
+        </div>
+
+        <div class="setting-row">
+            <label for="override-header">
+                <abbr title="Override Accept-Language header">
+                    Override Header
+                </abbr>
+            </label>
+            <input type="checkbox" id="override-header">
+        </div>
+
+        <div class="setting-row">
+            <label for="header-language">
+                Header Language
+            </label>
+
+            <select id="header-language">
+                <option value="en-US,en;q=0.9">
+                    English (US)
+                </option>
+
+                <option value="en-GB,en;q=0.9">
+                    English (UK)
+                </option>
+
+                <option value="fr-FR,fr;q=0.9">
+                    French
+                </option>
+
+                <option value="de-DE,de;q=0.9">
+                    German
+                </option>
+
+                <option value="custom">
+                    Custom...
+                </option>
+            </select>
+        </div>
+
+        <div id="header-custom-container" class="custom-input-container">
+            <input type="text" id="header-language-custom" placeholder="e.g. en-US,en;q=0.9">
+        </div>
+
+        <div class="button-row">
+            <button id="save-btn">
+                Save
+            </button>
+
+            <button id="reset-btn">
+                Reset
+            </button>
+        </div>
+
+
+    </main>
+    <footer class="footer">
+        <a href="#" target="" title="Place holder, I will add it after I get the link">
+            Mozilla Store
+        </a>
+
+        <span>•</span>
+
+        <a href="https://github.com/Zap-09/Google_language_lock" target="_blank">
+            GitHub
+        </a>
+
+        <span>•</span>
+        <a href="https://github.com/Zap-09/Google_language_lock#usage-help" target="_blank">
+            Help
+        </a>
+
+    </footer>
+    <script src="scripts.js"></script>
+
+</body>
+
+</html>
