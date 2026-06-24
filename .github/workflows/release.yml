@@ -27,38 +27,30 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Build XPI
+            - name: Build Extension
               run: npx web-ext build --source-dir src --artifacts-dir artifacts
 
-            - name: Create XPI
+            - name: Convert package to XPI
               id: ext
               shell: bash
               run: |
                   EXT_FILE=$(find artifacts -name "*.zip" | head -n 1)
 
-                  mv "$EXT_FILE" artifacts/google_language_lock.xpi
-
-                  echo "path=artifacts/google_language_lock.xpi" >> "$GITHUB_OUTPUT"
-
-            - name: Locate XPI
-              id: xpi
-              shell: bash
-              run: |
-                  XPI_FILE=$(find artifacts -name "*.xpi" | head -n 1)
-
-                  if [ -z "$XPI_FILE" ]; then
-                    echo "No XPI file found!"
+                  if [ -z "$EXT_FILE" ]; then
+                    echo "No extension package found!"
                     exit 1
                   fi
 
-                  echo "path=$XPI_FILE" >> "$GITHUB_OUTPUT"
+                  mv "$EXT_FILE" artifacts/google_language_lock.xpi
+
+                  echo "path=artifacts/google_language_lock.xpi" >> "$GITHUB_OUTPUT"
 
             - name: Create release archive
               shell: bash
               run: |
                   mkdir package
 
-                  cp "${{ steps.xpi.outputs.path }}" package/
+                  cp "${{ steps.ext.outputs.path }}" package/
                   cp LICENSE package/
 
                   cd package
