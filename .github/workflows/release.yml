@@ -1,64 +1,74 @@
 name: Build and Release Extension
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Release tag (example: v1.0.0)"
-        required: true
-        type: string
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: "Release tag (example: v1.0.0)"
+                required: true
+                type: string
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Build XPI
-        run: npx web-ext build --source-dir src --artifacts-dir artifacts
+            - name: Build XPI
+              run: npx web-ext build --source-dir src --artifacts-dir artifacts
 
-      - name: Locate XPI
-        id: xpi
-        shell: bash
-        run: |
-          XPI_FILE=$(find artifacts -name "*.xpi" | head -n 1)
+            - name: Create XPI
+              id: ext
+              shell: bash
+              run: |
+                  EXT_FILE=$(find artifacts -name "*.zip" | head -n 1)
 
-          if [ -z "$XPI_FILE" ]; then
-            echo "No XPI file found!"
-            exit 1
-          fi
+                  mv "$EXT_FILE" artifacts/google_language_lock.xpi
 
-          echo "path=$XPI_FILE" >> "$GITHUB_OUTPUT"
+                  echo "path=artifacts/google_language_lock.xpi" >> "$GITHUB_OUTPUT"
 
-      - name: Create release archive
-        shell: bash
-        run: |
-          mkdir package
+            - name: Locate XPI
+              id: xpi
+              shell: bash
+              run: |
+                  XPI_FILE=$(find artifacts -name "*.xpi" | head -n 1)
 
-          cp "${{ steps.xpi.outputs.path }}" package/
-          cp LICENSE package/
+                  if [ -z "$XPI_FILE" ]; then
+                    echo "No XPI file found!"
+                    exit 1
+                  fi
 
-          cd package
+                  echo "path=$XPI_FILE" >> "$GITHUB_OUTPUT"
 
-          zip -r "../Google_Language_Lock_${{ github.event.inputs.tag }}.zip" .
+            - name: Create release archive
+              shell: bash
+              run: |
+                  mkdir package
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.event.inputs.tag }}
-          generate_release_notes: true
-          files: |
-            Google_Language_Lock_${{ github.event.inputs.tag }}.zip
+                  cp "${{ steps.xpi.outputs.path }}" package/
+                  cp LICENSE package/
+
+                  cd package
+
+                  zip -r "../Google_Language_Lock_${{ github.event.inputs.tag }}.zip" .
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.event.inputs.tag }}
+                  generate_release_notes: true
+                  files: |
+                      Google_Language_Lock_${{ github.event.inputs.tag }}.zip
