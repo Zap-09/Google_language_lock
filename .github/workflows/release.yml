@@ -63,10 +63,10 @@ jobs:
                   WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
               run: |
                   npx web-ext sign \
-                    --channel listed \
+                    --channel unlisted \
                     --api-key "$WEB_EXT_API_KEY" \
                     --api-secret "$WEB_EXT_API_SECRET" \
-                    --xpi "${{ steps.ext.outputs.path }}"
+                    "${{ steps.ext.outputs.path }}"
 
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
