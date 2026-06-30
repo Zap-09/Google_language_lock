@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Google Language Lock",
-    "version": "1.0",
+    "version": "1.0.1",
     "browser_specific_settings": {
         "gecko": {
             "id": "{949c7aab-8f6c-4028-8773-09a38eaaec3a}",

@@ -85,8 +85,6 @@ browser.webRequest.onBeforeRequest.addListener(
                 return;
             }
 
-            // avoid redirect loop
-
             if (url.searchParams.get("hl") === language) {
                 return;
             }

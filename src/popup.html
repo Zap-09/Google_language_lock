@@ -12,12 +12,9 @@
 
     <h1>Config</h1>
 
-    <div id="unsaved-warning">
-        You have unsaved settings
-    </div>
-
     <main class="popup">
-
+        <div class="banner success" id="banner">
+        </div>
         <div class="setting-row">
             <label for="enable">
                 Enable Extension
@@ -105,21 +102,23 @@
 
     </main>
     <footer class="footer">
-        <a href="#" target="" title="Place holder, I will add it after I get the link">
+        <a class="external-link" href="https://addons.mozilla.org/en-US/firefox/addon/google-language-lock/"
+            id="mozillaStoreLink" data-android="https://addons.mozilla.org/android/addon/google-language-lock/"
+            data-desktop="https://addons.mozilla.org/en-US/firefox/addon/google-language-lock/">
             Mozilla Store
         </a>
 
         <span>•</span>
 
-        <a href="https://github.com/Zap-09/Google_language_lock" target="_blank">
+        <a class="external-link" href="https://github.com/Zap-09/Google_language_lock">
             GitHub
         </a>
 
         <span>•</span>
-        <a href="https://github.com/Zap-09/Google_language_lock#usage-help" target="_blank">
+
+        <a class="external-link" href="https://github.com/Zap-09/Google_language_lock#usage--help">
             Help
         </a>
-
     </footer>
     <script src="scripts.js"></script>
 

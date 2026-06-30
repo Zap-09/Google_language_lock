@@ -22,11 +22,11 @@ You can add your own language using a custom language code.
 
 ## Installation
 
-- ~~Get it from Mozilla Add-ons~~:
-  Don't have the link yet
+- Get it from Mozilla Add-ons:
+  https://addons.mozilla.org/en-US/firefox/addon/google-language-lock/
 
-- ~~Get it from Mozilla Add-ons (Android)~~:
-  Don't have the link yet
+- Get it from Mozilla Add-ons (Android):
+  https://addons.mozilla.org/en-US/android/addon/google-language-lock/
 
 - Download the xpi from GitHub releases:
   https://github.com/Zap-09/Google_language_lock/releases

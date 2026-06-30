@@ -20,6 +20,17 @@ const defaultSettings = {
     },
 };
 
+function showBanner(message, type = "success") {
+    const banner = document.getElementById("banner");
+
+    banner.textContent = message;
+    banner.className = `banner ${type} show`;
+
+    setTimeout(() => {
+        banner.classList.remove("show");
+    }, 2000);
+}
+
 function updateCustomFields() {
     searchCustom.style.display =
         searchSelect.value === "custom" ? "block" : "none";
@@ -91,10 +102,9 @@ async function saveSettings() {
         await browser.storage.local.set({
             settings,
         });
-
-        console.log("Settings saved:", settings);
+        showBanner("Settings saved", "success");
     } catch (err) {
-        console.error("Failed saving settings:", err);
+        showBanner(`Failed saving settings: ${err}`, "error");
     }
 }
 
@@ -132,6 +142,39 @@ document.getElementById("reset-btn").addEventListener("click", async () => {
     await browser.storage.local.set({
         settings,
     });
+    showBanner("Settings reset", "info");
 });
 
 loadSettings();
+
+function setMzillaStoreLink() {
+    browser.runtime.getPlatformInfo().then((info) => {
+        let mozillaStoreLink = document.getElementById("mozillaStoreLink");
+
+        let androidLink = mozillaStoreLink.dataset.android;
+        let desktopLink = mozillaStoreLink.dataset.desktop;
+
+        if (info.os === "android") {
+            mozillaStoreLink.href = androidLink;
+        } else {
+            mozillaStoreLink.href = desktopLink;
+        }
+    });
+}
+setMzillaStoreLink();
+
+function setupExternalLinks() {
+    const links = document.querySelectorAll("a.external-link");
+
+    links.forEach((link) => {
+        link.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            let url = link.href;
+            browser.tabs.create({ url });
+            window.close();
+        });
+    });
+}
+
+setupExternalLinks();

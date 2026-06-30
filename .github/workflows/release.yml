@@ -57,6 +57,17 @@ jobs:
 
                   zip -r "../Google_Language_Lock_${{ github.event.inputs.tag }}.zip" .
 
+            - name: Upload to Mozilla Add-ons
+              env:
+                  WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+                  WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+              run: |
+                  npx web-ext sign \
+                    --channel listed \
+                    --api-key "$WEB_EXT_API_KEY" \
+                    --api-secret "$WEB_EXT_API_SECRET" \
+                    --xpi "${{ steps.ext.outputs.path }}"
+
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
