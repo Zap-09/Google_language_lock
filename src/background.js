@@ -58,6 +58,7 @@ browser.storage.onChanged.addListener((changes, areaName) => {
 
 // ---------- Modify Google URL ----------
 
+
 browser.webRequest.onBeforeRequest.addListener(
     (details) => {
         if (!currentSettings.extensionEnabled) {
@@ -68,10 +69,15 @@ browser.webRequest.onBeforeRequest.addListener(
             return;
         }
 
+        // Only modify actual page navigations.
+        if (details.type !== "main_frame") {
+            return;
+        }
+
         try {
             const url = new URL(details.url);
 
-            if (!url.hostname.includes("google.")) {
+            if (!/(^|\.)google\.[a-z.]+$/i.test(url.hostname)) {
                 return;
             }
 
@@ -99,7 +105,9 @@ browser.webRequest.onBeforeRequest.addListener(
         }
     },
     {
-        urls: ["*://*.google.com/*", "*://*.google.*/ *"],
+        urls: [
+            "*://*.google.com/*",
+        ],
     },
     ["blocking"],
 );
@@ -137,7 +145,7 @@ browser.webRequest.onBeforeSendHeaders.addListener(
         };
     },
     {
-        urls: ["*://*.google.com/*", "*://*.google.*/*"],
+        urls: ["*://*.google.com/*"],
     },
     ["blocking", "requestHeaders"],
 );
